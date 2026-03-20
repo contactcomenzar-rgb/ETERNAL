@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Eternal Elevator</title>
+    <link rel="icon" type="image/png" href="../img/logo-01.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css?v=20260320">
+</head>
+<body class="admin-auth-page">
+    <main class="admin-auth-wrap">
+        <section class="admin-auth-card">
+            <img src="../img/logo-01.png" alt="Eternal Elevator" width="54" height="54" class="admin-auth-logo">
+            <h1>Admin Login</h1>
+            <p>Use your admin email and password to access the control panel.</p>
+
+            <form id="adminLoginForm" class="admin-form" novalidate>
+                <label for="adminEmail">Email</label>
+                <input id="adminEmail" type="email" required autocomplete="username" placeholder="admin@eternalelevator.com">
+
+                <label for="adminPassword">Password</label>
+                <input id="adminPassword" type="password" required autocomplete="current-password" placeholder="Enter password">
+
+                <p id="loginError" class="admin-error" aria-live="polite"></p>
+
+                <button type="submit" class="admin-btn admin-btn-primary">Login</button>
+            </form>
+
+            <a href="../index.html" class="admin-back-link">Back to Website</a>
+        </section>
+    </main>
+    <script src="./js/config.js"></script>
+    <script src="../js/site-data.js?v=20260320"></script>
+    <script src="./js/login.js?v=20260320" defer></script>
+</body>
+</html>

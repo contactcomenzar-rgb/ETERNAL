@@ -1,0 +1,201 @@
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 110;
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+}
+
+.nav-shell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 78px;
+    gap: 1rem;
+    position: relative;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.66rem;
+}
+
+.brand-logo {
+    width: 2.75rem;
+    height: 2.75rem;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid #f2f2f2;
+    background: #fff;
+}
+
+.brand-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #17202d;
+}
+
+.menu-toggle {
+    display: none;
+    border: 1px solid #d8dee8;
+    width: 2.55rem;
+    height: 2.55rem;
+    border-radius: 10px;
+    color: #1f2937;
+    background: #fff;
+    cursor: pointer;
+}
+
+.menu-toggle .ico {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.nav-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+}
+
+.nav-menu a {
+    color: #2a3240;
+    font-weight: 600;
+    font-size: 0.94rem;
+    transition: color 0.2s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a:focus-visible {
+    color: var(--accent);
+}
+
+.nav-hire-btn {
+    margin-left: 0.5rem;
+    padding-inline: 1.1rem;
+    box-shadow: 0 10px 22px rgba(242, 106, 27, 0.24);
+}
+
+@media (max-width: 920px) {
+    .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+    }
+
+    .nav-wrap {
+        position: absolute;
+        right: 0.5rem;
+        top: calc(100% + 0.5rem);
+        width: calc(100% - 1rem);
+        max-width: 320px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        z-index: 120;
+    }
+
+    .nav-wrap.open {
+        display: flex;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .nav-hire-btn {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .nav-menu a {
+        padding: 0.5rem 0;
+        font-size: 0.95rem;
+    }
+}
+
+/* Tablet & iPad (768px and below) */
+@media (max-width: 768px) {
+    .nav-shell {
+        min-height: 70px;
+    }
+
+    .brand-logo {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    .brand-text {
+        font-size: 0.95rem;
+    }
+
+    .nav-wrap {
+        right: 0.5rem !important;
+        max-width: 280px;
+        padding: 0.85rem;
+    }
+
+    .menu-toggle {
+        width: 2.3rem;
+        height: 2.3rem;
+    }
+
+    .menu-toggle .ico {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+    .nav-shell {
+        min-height: 64px;
+        gap: 0.5rem;
+    }
+
+    .brand-logo {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .brand-text {
+        font-size: 0.9rem;
+    }
+
+    .nav-wrap {
+        right: 0.3rem !important;
+        width: calc(100% - 0.6rem);
+        max-width: 260px;
+        padding: 0.75rem;
+        top: calc(100% + 0.3rem);
+    }
+
+    .menu-toggle {
+        width: 2.1rem;
+        height: 2.1rem;
+    }
+
+    .menu-toggle .ico {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
+
+    .nav-menu a {
+        font-size: 0.9rem;
+    }
+}

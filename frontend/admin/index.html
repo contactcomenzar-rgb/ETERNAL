@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Eternal Elevator</title>
+    <link rel="icon" type="image/png" href="../img/logo-01.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css?v=20260320">
+</head>
+<body class="admin-page">
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-brand">
+                <img src="../img/logo-01.png" alt="Eternal Elevator" width="42" height="42">
+                <div>
+                    <h1>Admin Panel</h1>
+                    <p>Eternal Elevator</p>
+                </div>
+            </div>
+
+            <nav class="admin-nav" aria-label="Admin navigation">
+                <button class="admin-nav-btn active" data-target="dashboard">Dashboard</button>
+                <button class="admin-nav-btn" data-target="home">Home Management</button>
+                <button class="admin-nav-btn" data-target="reviews">Reviews Management</button>
+                <button class="admin-nav-btn" data-target="blogs">Blog Management</button>
+                <button class="admin-nav-btn" data-target="social">Social Media</button>
+                <button class="admin-nav-btn" data-target="contact">Contact Info</button>
+                <button class="admin-nav-btn" data-target="messages">Contact Messages</button>
+                <button class="admin-nav-btn" data-target="password">Change Password</button>
+            </nav>
+
+            <button id="logoutBtn" class="admin-btn admin-btn-outline">Logout</button>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <h2 id="adminSectionTitle">Dashboard</h2>
+                <div class="admin-notification">
+                    <span>New Messages</span>
+                    <strong id="newMessageCount">0</strong>
+                </div>
+            </header>
+
+            <p id="adminAlert" class="admin-alert" aria-live="polite"></p>
+
+            <section class="admin-section active" id="section-dashboard">
+                <div class="admin-cards-grid">
+                    <article class="admin-card"><h3 id="dashStat0">120+</h3><p>Projects</p></article>
+                    <article class="admin-card"><h3 id="dashStat1">92%</h3><p>Hours</p></article>
+                    <article class="admin-card"><h3 id="dashStat2">350%</h3><p>Team Size</p></article>
+                    <article class="admin-card"><h3 id="dashStat3">24/7</h3><p>Amazon Listings</p></article>
+                </div>
+
+                <div class="admin-cards-grid compact">
+                    <article class="admin-card"><h3 id="totalBlogs">0</h3><p>Total Blogs</p></article>
+                    <article class="admin-card"><h3 id="totalReviews">0</h3><p>Total Reviews</p></article>
+                    <article class="admin-card"><h3 id="totalMessages">0</h3><p>Total Contact Messages</p></article>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Control Panel Features</h3>
+                    <ul id="infoCardsList" class="admin-check-list"></ul>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-home">
+                <div class="admin-card">
+                    <h3>Edit Homepage Statistics</h3>
+                    <form id="homeStatsForm" class="admin-form-grid"></form>
+                    <button class="admin-btn admin-btn-primary" id="saveHomeStatsBtn" type="button">Save Homepage</button>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-reviews">
+                <div class="admin-card">
+                    <h3>Add / Edit Review (Max 9 visible)</h3>
+                    <form id="reviewForm" class="admin-form-grid" novalidate>
+                        <input type="hidden" id="reviewId">
+                        <label>Client Name <input id="reviewClientName" required></label>
+                        <label>Job Title <input id="reviewJobTitle" required></label>
+                        <label>Rating <input id="reviewRating" type="number" min="0" max="5" step="0.1" value="5.0" required></label>
+                        <label>Start Date <input id="reviewStartDate" type="date" required></label>
+                        <label>End Date <input id="reviewEndDate" type="date"></label>
+                        <label><input id="reviewOngoing" type="checkbox"> Ongoing Job (Present)</label>
+                        <label>Review Link (Main Website URL) <input id="reviewLink" type="url" placeholder="https://www.upwork.com/..." required></label>
+                        <label>Total Earnings <input id="reviewTotalEarnings" type="number" min="0" step="0.01" placeholder="6475.00" required></label>
+                        <label>Hourly Rate <input id="reviewHourlyRate" type="number" min="0" step="0.01" placeholder="15.97" required></label>
+                        <label>Total Hours <input id="reviewTotalHours" type="number" min="0" step="1" placeholder="495" required></label>
+                        <label>Client Review <textarea id="reviewText" rows="3" required></textarea></label>
+                        <label>Freelancer Response <textarea id="reviewResponse" rows="3" required></textarea></label>
+                        <div class="admin-actions">
+                            <button class="admin-btn admin-btn-primary" type="submit">Save Review</button>
+                            <button class="admin-btn admin-btn-outline" id="reviewFormReset" type="button">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="admin-card">
+                    <h3>Existing Reviews</h3>
+                    <div id="reviewList" class="admin-list"></div>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-blogs">
+                <div class="admin-card">
+                    <h3>Add / Edit Blog</h3>
+                    <form id="blogForm" class="admin-form-grid" novalidate>
+                        <input type="hidden" id="blogId">
+                        <label>Title <input id="blogTitle" required></label>
+                        <label>Description <textarea id="blogDescription" rows="2" required></textarea></label>
+                        <label>Content</label>
+                        <div class="admin-editor-toolbar" role="toolbar" aria-label="Blog content tools">
+                            <button type="button" class="admin-btn admin-btn-outline" data-editor-action="h2">H2</button>
+                            <button type="button" class="admin-btn admin-btn-outline" data-editor-action="h3">H3</button>
+                            <button type="button" class="admin-btn admin-btn-outline" data-editor-action="bold">Bold</button>
+                            <button type="button" class="admin-btn admin-btn-outline" data-editor-action="linebreak">Line Break</button>
+                        </div>
+                        <textarea id="blogContent" rows="7" required placeholder="Use toolbar: H2/H3/Bold. Example: **important text**"></textarea>
+                        <p class="admin-help-text">Formatting supported on website: lines starting with #, ##, ### and **bold** text.</p>
+                        <label>Date <input id="blogDate" required placeholder="March 15, 2026"></label>
+                        <label>Author (By) <input id="blogAuthor" required></label>
+                        <label>Blog Link (optional) <input id="blogLink" placeholder="blogs/my-post.html"></label>
+                        <label>Upload Blog Image <input id="blogImageFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
+                        <img id="blogImagePreview" class="admin-image-preview" alt="Blog image preview" hidden>
+                        <div class="admin-actions">
+                            <button class="admin-btn admin-btn-primary" type="submit">Save Blog</button>
+                            <button class="admin-btn admin-btn-outline" id="blogFormReset" type="button">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="admin-card">
+                    <h3>Existing Blogs</h3>
+                    <div id="blogList" class="admin-list"></div>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-social">
+                <div class="admin-card">
+                    <h3>Social Media Links</h3>
+                    <form id="socialForm" class="admin-form-grid" novalidate>
+                        <label>Instagram <input id="socialInstagram" required></label>
+                        <label>Pinterest <input id="socialPinterest" required></label>
+                        <label>X (Twitter) <input id="socialTwitter" required></label>
+                        <label>Facebook <input id="socialFacebook" required></label>
+                        <button class="admin-btn admin-btn-primary" type="submit">Save Social Links</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-contact">
+                <div class="admin-card">
+                    <h3>Contact Information</h3>
+                    <form id="contactInfoForm" class="admin-form-grid" novalidate>
+                        <label>Phone <input id="contactPhone" required></label>
+                        <label>Email <input id="contactEmail" type="email" required></label>
+                        <label>Address <textarea id="contactAddress" rows="4" required></textarea></label>
+                        <button class="admin-btn admin-btn-primary" type="submit">Save Contact Info</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-messages">
+                <div class="admin-card">
+                    <div class="admin-section-head">
+                        <h3>Contact Form Messages</h3>
+                        <button id="downloadMessagesBtn" class="admin-btn admin-btn-outline" type="button">Download Excel (CSV)</button>
+                    </div>
+                    <div id="messagesList" class="admin-list"></div>
+                </div>
+            </section>
+
+            <section class="admin-section" id="section-password">
+                <div class="admin-card">
+                    <h3>Change Password</h3>
+                    <form id="changePasswordForm" class="admin-form-grid" novalidate>
+                        <label>Old Password <input id="oldPassword" type="password" required autocomplete="current-password"></label>
+                        <label>New Password <input id="newPassword" type="password" required autocomplete="new-password"></label>
+                        <label>Confirm Password <input id="confirmPassword" type="password" required autocomplete="new-password"></label>
+                        <button class="admin-btn admin-btn-primary" type="submit">Change Password</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="./js/config.js"></script>
+    <script src="../js/site-data.js?v=20260320"></script>
+    <script src="auth.js?v=20260320"></script>
+    <script src="./js/admin.js" defer></script>
+</body>
+</html>

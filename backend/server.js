@@ -60,6 +60,12 @@ app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
+
+app.get("/api/health", (req, res) => {
+  console.log("Ping received at:", new Date().toISOString());
+  res.status(200).json({ status: "ok" });
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

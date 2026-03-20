@@ -186,21 +186,20 @@
     const blogFormReset = document.getElementById("blogFormReset");
     const blogContent = document.getElementById("blogContent");
     const blogImageFileInput = document.getElementById("blogImageFile");
-    const blogImageInput = document.getElementById("blogImage");
     const blogImagePreview = document.getElementById("blogImagePreview");
     const blogEditorToolbar = document.querySelector(".admin-editor-toolbar");
     const MAX_IMAGE_BYTES = 12 * 1024 * 1024;
-    const MAX_UPLOAD_DATA_URL_BYTES = 2.2 * 1024 * 1024;
+    // const MAX_UPLOAD_DATA_URL_BYTES = 2.2 * 1024 * 1024;
 
-    function getBlogImageInputValue() {
-        return blogImageInput ? blogImageInput.value.trim() : "";
-    }
+    // function getBlogImageInputValue() {
+    //     return blogImageInput ? blogImageInput.value.trim() : "";
+    // }
 
-    function clearBlogImageInputValue() {
-        if (blogImageInput) {
-            blogImageInput.value = "";
-        }
-    }
+    // function clearBlogImageInputValue() {
+    //     if (blogImageInput) {
+    //         blogImageInput.value = "";
+    //     }
+    // }
 
     function surroundSelectedText(textarea, before, after) {
         const start = textarea.selectionStart;
@@ -247,66 +246,66 @@
         blogImagePreview.hidden = false;
     }
 
-    function fileToDataURL(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(String(reader.result || ""));
-            reader.onerror = () => reject(new Error("Failed to read image file"));
-            reader.readAsDataURL(file);
-        });
-    }
+    // function fileToDataURL(file) {
+    //     return new Promise((resolve, reject) => {
+    //         const reader = new FileReader();
+    //         reader.onload = () => resolve(String(reader.result || ""));
+    //         reader.onerror = () => reject(new Error("Failed to read image file"));
+    //         reader.readAsDataURL(file);
+    //     });
+    // }
 
-    function estimateDataUrlBytes(dataUrl) {
-        const parts = String(dataUrl || "").split(",");
-        if (parts.length < 2) return 0;
-        const base64 = parts[1];
-        return Math.floor((base64.length * 3) / 4);
-    }
+    // function estimateDataUrlBytes(dataUrl) {
+    //     const parts = String(dataUrl || "").split(",");
+    //     if (parts.length < 2) return 0;
+    //     const base64 = parts[1];
+    //     return Math.floor((base64.length * 3) / 4);
+    // }
 
-    function loadImageElement(dataUrl) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error("Invalid image data"));
-            img.src = dataUrl;
-        });
-    }
+    // function loadImageElement(dataUrl) {
+    //     return new Promise((resolve, reject) => {
+    //         const img = new Image();
+    //         img.onload = () => resolve(img);
+    //         img.onerror = () => reject(new Error("Invalid image data"));
+    //         img.src = dataUrl;
+    //     });
+    // }
 
-    async function compressImageToDataUrl(file) {
-        const originalDataUrl = await fileToDataURL(file);
-        const img = await loadImageElement(originalDataUrl);
+    // async function compressImageToDataUrl(file) {
+    //     const originalDataUrl = await fileToDataURL(file);
+    //     const img = await loadImageElement(originalDataUrl);
 
-        const maxDimension = 1600;
-        let width = img.naturalWidth || img.width;
-        let height = img.naturalHeight || img.height;
+    //     const maxDimension = 1600;
+    //     let width = img.naturalWidth || img.width;
+    //     let height = img.naturalHeight || img.height;
 
-        const scale = Math.min(1, maxDimension / Math.max(width, height));
-        width = Math.max(1, Math.round(width * scale));
-        height = Math.max(1, Math.round(height * scale));
+    //     const scale = Math.min(1, maxDimension / Math.max(width, height));
+    //     width = Math.max(1, Math.round(width * scale));
+    //     height = Math.max(1, Math.round(height * scale));
 
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
+    //     const canvas = document.createElement("canvas");
+    //     canvas.width = width;
+    //     canvas.height = height;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-            throw new Error("Failed to process image");
-        }
+    //     const ctx = canvas.getContext("2d");
+    //     if (!ctx) {
+    //         throw new Error("Failed to process image");
+    //     }
 
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, width, height);
-        ctx.drawImage(img, 0, 0, width, height);
+    //     ctx.fillStyle = "#ffffff";
+    //     ctx.fillRect(0, 0, width, height);
+    //     ctx.drawImage(img, 0, 0, width, height);
 
-        let quality = 0.86;
-        let output = canvas.toDataURL("image/jpeg", quality);
+    //     let quality = 0.86;
+    //     let output = canvas.toDataURL("image/jpeg", quality);
 
-        while (estimateDataUrlBytes(output) > MAX_UPLOAD_DATA_URL_BYTES && quality > 0.45) {
-            quality = Number((quality - 0.08).toFixed(2));
-            output = canvas.toDataURL("image/jpeg", quality);
-        }
+    //     while (estimateDataUrlBytes(output) > MAX_UPLOAD_DATA_URL_BYTES && quality > 0.45) {
+    //         quality = Number((quality - 0.08).toFixed(2));
+    //         output = canvas.toDataURL("image/jpeg", quality);
+    //     }
 
-        return output;
-    }
+    //     return output;
+    // }
 
     blogEditorToolbar?.addEventListener("click", (event) => {
         const button = event.target.closest("button[data-editor-action]");
@@ -337,106 +336,95 @@
         }
     });
 
-    blogImageInput?.addEventListener("input", () => {
-        const imageValue = getBlogImageInputValue();
-        if (imageValue) {
-            blogImageFileInput.value = "";
-        }
-        updateBlogImagePreview(imageValue);
-    });
+    // blogImageInput?.addEventListener("input", () => {
+    //     const imageValue = getBlogImageInputValue();
+    //     if (imageValue) {
+    //         blogImageFileInput.value = "";
+    //     }
+    //     updateBlogImagePreview(imageValue);
+    // });
 
-    blogImageFileInput.addEventListener("change", async () => {
-        const file = blogImageFileInput.files && blogImageFileInput.files[0];
-        if (!file) {
-            updateBlogImagePreview(getBlogImageInputValue());
-            return;
-        }
+    blogImageFileInput.addEventListener("change", () => {
+    const file = blogImageFileInput.files && blogImageFileInput.files[0];
 
-        if (file.size > MAX_IMAGE_BYTES) {
-            blogImageFileInput.value = "";
-            showAlert("Image too large. Please upload image under 8MB", true);
-            return;
-        }
+    if (!file) {
+        updateBlogImagePreview("");
+        return;
+    }
 
-        clearBlogImageInputValue();
-        try {
-            const imageDataUrl = await compressImageToDataUrl(file);
-            updateBlogImagePreview(imageDataUrl);
-        } catch {
-            showAlert("Image preview failed", true);
-            updateBlogImagePreview("");
-        }
-    });
+    if (file.size > MAX_IMAGE_BYTES) {
+        blogImageFileInput.value = "";
+        showAlert("Image too large. Please upload under 12MB", true);
+        return;
+    }
+
+    const previewURL = URL.createObjectURL(file);
+    updateBlogImagePreview(previewURL);
+});
 
     blogFormReset?.addEventListener("click", () => {
         blogForm.reset();
         updateBlogImagePreview("");
     });
 
-    blogForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+  blogForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        let imageValue = getBlogImageInputValue();
-        const file = blogImageFileInput.files && blogImageFileInput.files[0];
+    const file = blogImageFileInput.files && blogImageFileInput.files[0];
 
-        if (file) {
-            if (file.size > MAX_IMAGE_BYTES) {
-                showAlert("Image too large. Please upload image under 12MB", true);
-                return;
-            }
+    // Optional validation
+    if (file && file.size > 12 * 1024 * 1024) {
+        showAlert("Image too large. Please upload under 12MB", true);
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("title", document.getElementById("blogTitle").value.trim());
+    formData.append("description", document.getElementById("blogDescription").value.trim());
+    formData.append("content", blogContent.value.trim());
+    formData.append("date", document.getElementById("blogDate").value.trim());
+    formData.append("author", document.getElementById("blogAuthor").value.trim());
+    formData.append("link", document.getElementById("blogLink").value.trim());
+
+    // ✅ Send image file (Cloudinary will handle it)
+    if (file) {
+        formData.append("image", file);
+    }
+
+    try {
+        const res = await fetch(`${API}/blogs`, {
+            method: "POST",
+            body: formData // ❗ NO headers here
+        });
+
+        if (!res.ok) {
+            let message = "Failed to save blog";
 
             try {
-                imageValue = await compressImageToDataUrl(file);
-            } catch (err) {
-                console.error(err);
-                showAlert("Image upload failed", true);
-                return;
-            }
-        }
-
-        const blog = {
-            title: document.getElementById("blogTitle").value.trim(),
-            description: document.getElementById("blogDescription").value.trim(),
-            content: blogContent.value.trim(),
-            date: document.getElementById("blogDate").value.trim(),
-            author: document.getElementById("blogAuthor").value.trim(),
-            image: imageValue,
-            link: document.getElementById("blogLink").value.trim()
-        };
-
-        try {
-            const res = await fetch(`${API}/blogs`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(blog)
-            });
-
-            if (!res.ok) {
-                const responseType = res.headers.get("content-type") || "";
-                let message = "Failed to save blog";
-
-                if (responseType.includes("application/json")) {
-                    const payload = await res.json();
-                    message = payload.message || payload.error || message;
-                } else {
-                    const errorText = await res.text();
-                    if (errorText) message = errorText;
-                }
-
-                throw new Error(message);
+                const data = await res.json();
+                message = data.message || message;
+            } catch {
+                const text = await res.text();
+                if (text) message = text;
             }
 
-            showAlert("Blog saved");
-            blogForm.reset();
-            updateBlogImagePreview("");
-            loadData();
-        } catch (err) {
-            console.error(err);
-            showAlert(`Error saving blog details: ${err.message}`, true);
+            throw new Error(message);
         }
-    });
+
+        showAlert("Blog saved successfully ✅");
+
+        blogForm.reset();
+        blogImageFileInput.value = "";
+        updateBlogImagePreview("");
+
+        loadData();
+
+    } catch (err) {
+        console.error(err);
+        showAlert(`Error: ${err.message}`, true);
+    }
+});
 
     // ---------------- REVIEWS ----------------
     const reviewForm = document.getElementById("reviewForm");

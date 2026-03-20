@@ -7,7 +7,10 @@ const blogSchema = new mongoose.Schema({
   date: String,
   author: String,
   image: String,
-  link: String
+  link: String,
+  image: String,
+  imagePublicId: String
+  
 }, { timestamps: true });
 
 module.exports = mongoose.model("Blog", blogSchema);

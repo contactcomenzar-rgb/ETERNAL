@@ -22,15 +22,27 @@ const adminRoutes = require("./routes/adminRoutes");
 // Connect DB
 connectDB();
 
-// Middleware
+const allowedOrigins = [
+  process.env.WEBSITE_URL || "https://eternalelevator.com",
+  process.env.ADMIN_URL || "https://eternalelevator.com/admin/login.html",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500"
+];
+
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "http://127.0.0.1:5500"
-  ],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.warn("❌ CORS blocked:", origin);
+      return callback(null, false);
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
+
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 

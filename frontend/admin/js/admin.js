@@ -398,19 +398,27 @@
             body: formData // ❗ NO headers here
         });
 
+        // if (!res.ok) {
+        //     let message = "Failed to save blog";
+
+            // try {
+            //     const data = await res.json();
+            //     message = data.message || message;
+            // } catch {
+            //     const text = await res.text();
+            //     if (text) message = text;
+            // }
+        //     if (!res.ok) {
+        //             const errorData = await res.json().catch(() => null);
+        //             throw new Error(errorData?.message || "Failed to save blog");
+        //         }
+
+        //     throw new Error(message);
+        // }
         if (!res.ok) {
-            let message = "Failed to save blog";
-
-            try {
-                const data = await res.json();
-                message = data.message || message;
-            } catch {
-                const text = await res.text();
-                if (text) message = text;
+                const errorData = await res.json().catch(() => null);
+                throw new Error(errorData?.message || "Failed to save blog");
             }
-
-            throw new Error(message);
-        }
 
         showAlert("Blog saved successfully ✅");
 

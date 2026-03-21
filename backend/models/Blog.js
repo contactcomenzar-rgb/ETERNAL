@@ -8,7 +8,6 @@ const blogSchema = new mongoose.Schema({
   author: String,
   image: String,
   link: String,
-  image: String,
   imagePublicId: String
   
 }, { timestamps: true });

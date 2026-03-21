@@ -1,10 +1,11 @@
-const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config();
+const express = require('express');
 const app = express();
 const path = require("path");
 const cors = require('cors');
 
-dotenv.config();
+
 const port = process.env.PORT;
 
 const connectDB = require('./config/db');
@@ -45,14 +46,20 @@ app.use("/api/admin", adminRoutes);
 
 
 app.use((err, req, res, next) => {
+  console.error("🔥 GLOBAL ERROR:", err);
+
   if (err && (err.type === "entity.too.large" || err.name === "PayloadTooLargeError")) {
     return res.status(413).json({
-      message: "Uploaded image is too large. Please upload a smaller image.",
-      error: "PayloadTooLarge"
+      message: "Uploaded image is too large",
+      error: err.message
     });
   }
 
-  return next(err);
+  // ✅ Catch EVERYTHING else
+  res.status(500).json({
+    message: err.message || "Internal Server Error",
+    error: err
+  });
 });
 
 // Test route
